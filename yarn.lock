@@ -6227,7 +6227,7 @@ fork-ts-checker-webpack-plugin@1.5.0:
     tapable "^1.0.0"
     worker-rpc "^0.1.0"
 
-fork-ts-checker-webpack-plugin@3.1.1, fork-ts-checker-webpack-plugin@^3.1.1:
+fork-ts-checker-webpack-plugin@3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/fork-ts-checker-webpack-plugin/-/fork-ts-checker-webpack-plugin-3.1.1.tgz#a1642c0d3e65f50c2cc1742e9c0a80f441f86b19"
   integrity sha512-DuVkPNrM12jR41KM2e+N+styka0EgLkTnXmNcXdgOM37vtGeY+oCBK/Jx0hzSeEU6memFCtWb4htrHPMDfwwUQ==
@@ -6235,6 +6235,19 @@ fork-ts-checker-webpack-plugin@3.1.1, fork-ts-checker-webpack-plugin@^3.1.1:
     babel-code-frame "^6.22.0"
     chalk "^2.4.1"
     chokidar "^3.3.0"
+    micromatch "^3.1.10"
+    minimatch "^3.0.4"
+    semver "^5.6.0"
+    tapable "^1.0.0"
+    worker-rpc "^0.1.0"
+
+fork-ts-checker-webpack-plugin@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/fork-ts-checker-webpack-plugin/-/fork-ts-checker-webpack-plugin-4.0.2.tgz#3adaa4ac911787740a693e0b9e69e62e054e1e7e"
+  integrity sha512-gq47CwlNV8BUkI+kxuvI/rbE9062YWqPb4HkSCnX1ylsfKJIymyiC1RWU6cjcw0PbzRqm8xdrrfC0iO45D//3A==
+  dependencies:
+    babel-code-frame "^6.22.0"
+    chalk "^2.4.1"
     micromatch "^3.1.10"
     minimatch "^3.0.4"
     semver "^5.6.0"
