@@ -1,8 +1,9 @@
+import { format } from 'date-fns'
 import { ContestLog, Ranking, RankingRegistrationOverview } from '../interfaces'
 import { Contest } from '../../contest/interfaces'
 import { formatLanguageName, formatMediaDescription } from '../transform/format'
 import { graphColor } from '../../ui/components/Graphs'
-import { format } from 'date-fns'
+import { getLanguageCodesFrom } from '../domain'
 
 // Utils
 const getDates = (startDate: Date, endDate: Date) => {
@@ -59,36 +60,47 @@ export interface AggregatedReadingActivityEntry {
   language: string
 }
 
+interface AggregatedReadingActivitySeries {
+  [date: string]: AggregatedReadingActivityEntry
+}
+
 const initializeAggregatedReadingAcitvity = (
   logs: ContestLog[],
   contest: Contest,
 ): InitializedAggregatedReadingActivity => {
-  let aggregated: InitializedAggregatedReadingActivity['aggregated'] = {}
-  let legend: InitializedAggregatedReadingActivity['legend'] = []
+  const languages = getLanguageCodesFrom(logs)
 
-  // Process all different languages
-  const languages: string[] = []
-  logs.forEach(log => {
-    if (!languages.includes(log.languageCode)) {
-      languages.push(log.languageCode)
-      legend.push({
-        title: formatLanguageName(log.languageCode),
-        strokeWidth: 10,
-      })
-    }
-  })
+  const initializedSeries: AggregatedReadingActivitySeries = getDates(
+    contest.start,
+    contest.end,
+  )
+    .map(date => date.toISOString())
+    .reduce(
+      (accumulator, date) => ({
+        ...accumulator,
+        [date]: {
+          x: date,
+          y: 0,
+          language: '',
+        },
+      }),
+      {},
+    )
 
-  const initializedSeries: {
-    [date: string]: AggregatedReadingActivityEntry
-  } = {}
+  let aggregated: InitializedAggregatedReadingActivity['aggregated'] = languages.reduce(
+    (accumulator, language) => ({
+      ...accumulator,
+      [language]: seriesWithLanguage(initializedSeries, language),
+    }),
+    {},
+  )
 
-  getDates(contest.start, contest.end).forEach(date => {
-    initializedSeries[format(date, 'yyMMdd')] = {
-      x: date.toISOString(),
-      y: 0,
-      language: '',
-    }
-  })
+  let legend: InitializedAggregatedReadingActivity['legend'] = languages.map(
+    languageCode => ({
+      title: formatLanguageName(languageCode),
+      strokeWidth: 10,
+    }),
+  )
 
   languages.forEach(language => {
     const series: typeof initializedSeries = {}
@@ -107,6 +119,13 @@ const initializeAggregatedReadingAcitvity = (
     aggregated,
     legend,
   }
+}
+
+const seriesWithLanguage = (
+  series: AggregatedReadingActivitySeries,
+  language: string,
+): AggregatedReadingActivitySeries => {
+  return series
 }
 
 export const aggregateReadingActivity = (

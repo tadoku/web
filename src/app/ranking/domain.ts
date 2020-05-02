@@ -1,6 +1,6 @@
 import { languageByCode } from './database'
 import { Contest } from '../contest/interfaces'
-import { RankingRegistration } from './interfaces'
+import { RankingRegistration, ContestLog } from './interfaces'
 import { User } from '../session/interfaces'
 
 export const validateAmount = (amount: string): boolean =>
@@ -26,3 +26,8 @@ export const canJoinContest = (
   contest &&
   isContestActive(contest) &&
   !isRegisteredForContest(registration, contest)
+
+export const getLanguageCodesFrom = (logs: ContestLog[]): string[] => {
+  const languages = logs.map(log => log.languageCode)
+  return languages.filter(language => languages.indexOf(language) == -1)
+}

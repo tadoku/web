@@ -22,7 +22,10 @@
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "typeRoots": [
+      "./types"
+    ]
   },
   "exclude": [
     ".next",
