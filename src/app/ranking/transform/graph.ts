@@ -2,11 +2,9 @@ import { ContestLog, Ranking, RankingRegistrationOverview } from '../interfaces'
 import { Contest } from '../../contest/interfaces'
 import { formatLanguageName, formatMediaDescription } from '../transform/format'
 import { graphColor } from '../../ui/components/Graphs'
+import { format } from 'date-fns'
 
 // Utils
-const prettyDate = (date: Date): string =>
-  `${date.getUTCFullYear()}-${date.getUTCMonth() + 1}-${date.getUTCDate()}`
-
 const getDates = (startDate: Date, endDate: Date) => {
   const dates = []
 
@@ -45,26 +43,31 @@ interface AggregatedReadingActivity {
   }[]
 }
 
+interface InitializedAggregatedReadingActivity {
+  aggregated: {
+    [languageCode: string]: { [date: string]: AggregatedReadingActivityEntry }
+  }
+  legend: {
+    title: string
+    strokeWidth: number
+  }[]
+}
+
 export interface AggregatedReadingActivityEntry {
   x: string // date in iso string for x axis
   y: number // page count for y axis
   language: string
 }
 
-export const aggregateReadingActivity = (
+const initializeAggregatedReadingAcitvity = (
   logs: ContestLog[],
   contest: Contest,
-): AggregatedReadingActivity => {
-  const aggregated: {
-    [languageCode: string]: { [date: string]: AggregatedReadingActivityEntry }
-  } = {}
+): InitializedAggregatedReadingActivity => {
+  let aggregated: InitializedAggregatedReadingActivity['aggregated'] = {}
+  let legend: InitializedAggregatedReadingActivity['legend'] = []
 
+  // Process all different languages
   const languages: string[] = []
-  const legend: {
-    title: string
-    strokeWidth: number
-  }[] = []
-
   logs.forEach(log => {
     if (!languages.includes(log.languageCode)) {
       languages.push(log.languageCode)
@@ -80,7 +83,7 @@ export const aggregateReadingActivity = (
   } = {}
 
   getDates(contest.start, contest.end).forEach(date => {
-    initializedSeries[prettyDate(date)] = {
+    initializedSeries[format(date, 'yyMMdd')] = {
       x: date.toISOString(),
       y: 0,
       language: '',
@@ -100,8 +103,23 @@ export const aggregateReadingActivity = (
     aggregated[language] = series
   })
 
+  return {
+    aggregated,
+    legend,
+  }
+}
+
+export const aggregateReadingActivity = (
+  logs: ContestLog[],
+  contest: Contest,
+): AggregatedReadingActivity => {
+  const { aggregated, legend } = initializeAggregatedReadingAcitvity(
+    logs,
+    contest,
+  )
+
   logs.forEach(log => {
-    const date = prettyDate(log.date)
+    const date = format(log.date, 'yyMMdd')
 
     if (aggregated[log.languageCode][date]) {
       aggregated[log.languageCode][date].y +=
