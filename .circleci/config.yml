@@ -67,4 +67,4 @@ workflows:
             - build
           filters:
             tags:
-              only: /.*/
+              only: /^v\d+$/
