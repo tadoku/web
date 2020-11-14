@@ -59,14 +59,12 @@ jobs:
 
 workflows:
   version: 2
-  build-and-deploy:
+  build:
     jobs:
       - build
+  deploy:
+    jobs:
       - deploy:
-          requires:
-            - build
           filters:
-            branches:
-              ignore: /.*/
             tags:
               only: /^v\d+$/
