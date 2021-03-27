@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/srvc/fail"
-	"github.com/tadoku/api/domain"
+	"github.com/tadoku/tadoku-monorepo/services/tadoku-contest-api/domain"
 )
 
 // ErrUserDoesNotExist for when a user could not be found

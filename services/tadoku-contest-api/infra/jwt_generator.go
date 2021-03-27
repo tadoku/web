@@ -4,7 +4,7 @@ import (
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/tadoku/api/usecases"
+	"github.com/tadoku/tadoku-monorepo/services/tadoku-contest-api/usecases"
 )
 
 // NewJWTGenerator intializes a new JWTGenerator

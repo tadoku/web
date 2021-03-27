@@ -1,7 +1,7 @@
 package usecases
 
 import (
-	"github.com/tadoku/api/domain"
+	"github.com/tadoku/tadoku-monorepo/services/tadoku-contest-api/domain"
 )
 
 // SessionClaims is what we store in the authentication token

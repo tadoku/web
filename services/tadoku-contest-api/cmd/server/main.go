@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/tadoku/api/app"
+	"github.com/tadoku/tadoku-monorepo/services/tadoku-contest-api/app"
 )
 
 func main() {

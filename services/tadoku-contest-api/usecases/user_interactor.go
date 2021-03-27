@@ -4,7 +4,7 @@ package usecases
 
 import (
 	"github.com/srvc/fail"
-	"github.com/tadoku/api/domain"
+	"github.com/tadoku/tadoku-monorepo/services/tadoku-contest-api/domain"
 )
 
 // UserInteractor contains all business logic for users

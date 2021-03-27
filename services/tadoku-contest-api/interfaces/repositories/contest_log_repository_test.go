@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/tadoku/api/domain"
-	"github.com/tadoku/api/interfaces/repositories"
+	"github.com/tadoku/tadoku-monorepo/services/tadoku-contest-api/domain"
+	"github.com/tadoku/tadoku-monorepo/services/tadoku-contest-api/interfaces/repositories"
 )
 
 func TestContestLogRepository_StoreUpdateDeleteLog(t *testing.T) {
