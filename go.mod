@@ -15,4 +15,5 @@ require (
 	github.com/lib/pq v1.10.0 // indirect
 	github.com/mattn/go-zglob v0.0.3 // indirect
 	github.com/stretchr/testify v1.7.0 // indirect
+	github.com/testcontainers/testcontainers-go v0.10.0 // indirect
 )
