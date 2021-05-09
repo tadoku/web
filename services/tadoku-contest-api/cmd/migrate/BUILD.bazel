@@ -19,6 +19,7 @@ go_binary(
 
 load("@io_bazel_rules_docker//go:image.bzl", "go_image")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
+load("@io_bazel_rules_docker//container:container.bzl", "container_push")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
 go_image(
@@ -41,4 +42,12 @@ container_image(
     base = ":base_image",
     tars = [":migrations-tar"],
     stamp = True,
+)
+
+container_push(
+    name = "image_push",
+    format = "Docker",
+    image = ":image",
+    registry = "ghcr.io",
+    repository = "tadoku/tadoku-monorepo/tadoku-contest-api-migrate",
 )
